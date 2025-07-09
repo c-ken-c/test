@@ -1,157 +1,187 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>水質導電度分析報告</title>
+  <title>Water Mixing EC Report - 2025/07/09</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      line-height: 1.6;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9fbfd;
+      margin: 0;
+      padding: 30px;
+      color: #333;
     }
-    h2 {
+    h1, h2 {
       text-align: center;
       color: #2a5d84;
+    }
+    .section {
+      max-width: 1000px;
+      margin: 0 auto 40px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
     th, td {
-      border: 1px solid #888;
-      padding: 10px;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
       text-align: center;
     }
     th {
-      background-color: #d9eaf7;
+      background-color: #e9f2fb;
+      font-weight: bold;
     }
     tr:nth-child(even) {
-      background-color: #f2f8fc;
+      background-color: #f6faff;
     }
-    .section {
-      margin-top: 40px;
+    .note {
+      background: #fffbea;
+      border-left: 4px solid #f7c948;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+    canvas {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
-  <h2>水源與流量、導電度對照表</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>水源</th>
-        <th>管徑</th>
-        <th>流量 (m³/h)</th>
-        <th>導電度範圍 (μS/cm)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>RO水</td>
-        <td>2.5"</td>
-        <td>43 ~ 45</td>
-        <td>11.7 ~ 11.9</td>
-      </tr>
-      <tr>
-        <td>台陽水（礦脈水）</td>
-        <td>2"</td>
-        <td>8.36 ~ 10</td>
-        <td>180 ~ 186（20 分鐘內上升）</td>
-      </tr>
-      <tr>
-        <td>未知（反向水）</td>
-        <td>2"</td>
-        <td>0.5</td>
-        <td>未測量</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2>混和水導電度理論值與實測值對照表</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>台陽水比例</th>
-        <th>RO水比例</th>
-        <th>實測導電度 (μS/cm)</th>
-        <th>理論導電度 (μS/cm)</th>
-        <th>差異值</th>
-        <th>備註</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>25%</td>
-        <td>75%</td>
-        <td>49.7</td>
-        <td>54.42</td>
-        <td>-4.72</td>
-        <td>實測略低</td>
-      </tr>
-      <tr>
-        <td>50%</td>
-        <td>50%</td>
-        <td>104.2</td>
-        <td>96.95</td>
-        <td>+7.25</td>
-        <td>實測略高</td>
-      </tr>
-      <tr>
-        <td>20%</td>
-        <td>80%</td>
-        <td>49.7</td>
-        <td>45.92</td>
-        <td>+3.78</td>
-        <td>實測略高</td>
-      </tr>
-      <tr>
-        <td>30%</td>
-        <td>70%</td>
-        <td>69.3</td>
-        <td>62.93</td>
-        <td>+6.37</td>
-        <td>實測略高</td>
-      </tr>
-      <tr>
-        <td>10%</td>
-        <td>90%</td>
-        <td>31.0</td>
-        <td>28.91</td>
-        <td>+2.09</td>
-        <td>實測略高</td>
-      </tr>
-    </tbody>
-  </table>
+  <h1>Water Mixing EC Report</h1>
+  <h2>Test Date: 2025/07/09 — Time: 09:30 ~ 11:00</h2>
 
   <div class="section">
-    <h2>結論與推論</h2>
-    <p><strong>1️⃣ 為何台陽水導電度會上升？</strong><br>
-    台陽水為地下礦脈水，其水源含礦濃度可能在抽水過程中逐漸改變，例如管線內部沉積物被沖刷、地下水層壓力變化或混入其他來源等，都可能使導電度在短時間（20分鐘）內由180上升至186 μS/cm。</p>
-
-    <p><strong>2️⃣ 為何出現非線性現象？</strong><br>
-    導電度並非絕對線性疊加，可能受以下影響：
-      <ul>
-        <li>離子間反應（共沉澱、離子交換、複合反應）</li>
-        <li>水中微粒或溶解氣體造成導電行為變化</li>
-        <li>水溫變動，導致測值偏差</li>
-        <li>第三水源混入（如反向水未被監測）造成擾動</li>
-      </ul>
-    </p>
-
-    <p><strong>3️⃣ 推論修正混合導電度公式（經驗推導）：</strong><br>
-    原線性模型為：
-    <code>EC_mix = R1 × EC1 + R2 × EC2</code><br>
-    修正模型可加入一項經驗因子 <code>k × R1 × R2 × |EC1 - EC2|</code> 表示離子互動效應：
-    <br><br>
-    <code>
-      EC_mix = R1 × EC1 + R2 × EC2 + k × R1 × R2 × |EC1 - EC2|
-    </code><br>
-    其中：<br>
-    R1 = 台陽水比例，R2 = RO水比例，k 為調整係數（實驗校正）<br>
-    初估若實測皆偏高，k 可能介於 0.05 ~ 0.2 之間。
-    </p>
+    <h2>Source Flow Rate & EC Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Water Source</th>
+          <th>Pipe Size</th>
+          <th>Flow Rate (m³/h)</th>
+          <th>EC Range (μS/cm)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RO</td>
+          <td>2.5"</td>
+          <td>43 ~ 45</td>
+          <td>11.7 ~ 11.9</td>
+        </tr>
+        <tr>
+          <td>SP (Spring Water)</td>
+          <td>2"</td>
+          <td>8.36 ~ 10</td>
+          <td>180 ~ 186 (↑ over 20 min)</td>
+        </tr>
+        <tr>
+          <td>Unknown (Reverse Flow)</td>
+          <td>2"</td>
+          <td>0.5</td>
+          <td>Not Measured</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <div class="section">
+    <h2>EC Mixing - Theoretical vs Actual</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>SP%</th>
+          <th>RO%</th>
+          <th>Measured EC (μS/cm)</th>
+          <th>Theoretical EC (μS/cm)</th>
+          <th>Diff</th>
+          <th>Remark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>25%</td><td>75%</td><td>49.7</td><td>54.42</td><td>-4.72</td><td>Measured lower</td></tr>
+        <tr><td>50%</td><td>50%</td><td>104.2</td><td>96.95</td><td>+7.25</td><td>Measured higher</td></tr>
+        <tr><td>20%</td><td>80%</td><td>49.7</td><td>45.92</td><td>+3.78</td><td>Measured higher</td></tr>
+        <tr><td>30%</td><td>70%</td><td>69.3</td><td>62.93</td><td>+6.37</td><td>Measured higher</td></tr>
+        <tr><td>10%</td><td>90%</td><td>31.0</td><td>28.91</td><td>+2.09</td><td>Measured higher</td></tr>
+      </tbody>
+    </table>
+
+    <canvas id="ecChart" width="600" height="300"></canvas>
+  </div>
+
+  <div class="section">
+    <h2>Conclusion</h2>
+    <div class="note">
+      <strong>1. Why SP EC Increased:</strong> <br>
+      SP is spring/mineral water. Over 20 minutes, mineral concentrations likely increased due to flushing sediment or pressure fluctuation, resulting in EC rising from 180 → 186 μS/cm.<br><br>
+
+      <strong>2. Why Non-linearity:</strong> <br>
+      The EC vs. %mix curve is not purely linear. Possible causes:
+      <ul>
+        <li>Ionic interaction, precipitation, or dissolved gas reactions</li>
+        <li>Undetected reverse-flow water may have entered</li>
+        <li>Temperature or pressure variation affecting EC sensor</li>
+      </ul>
+
+      <strong>3. Corrected Formula Suggestion:</strong><br>
+      EC<sub>mix</sub> = R<sub>1</sub> × EC<sub>1</sub> + R<sub>2</sub> × EC<sub>2</sub> + <em>k</em> × R<sub>1</sub> × R<sub>2</sub> × |EC<sub>1</sub> - EC<sub>2</sub>|<br>
+      where k is empirical (~0.05 ~ 0.2), R<sub>1</sub> = SP ratio, EC<sub>1</sub> = SP EC, R<sub>2</sub> = RO ratio, EC<sub>2</sub> = RO EC
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('ecChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['10%', '20%', '25%', '30%', '50%'],
+        datasets: [
+          {
+            label: 'Measured EC',
+            data: [31.0, 49.7, 49.7, 69.3, 104.2],
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            tension: 0.3
+          },
+          {
+            label: 'Theoretical EC',
+            data: [28.91, 45.92, 54.42, 62.93, 96.95],
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'SP+RO Mixing EC Comparison',
+            font: { size: 18 }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: 'EC (μS/cm)' },
+            beginAtZero: false
+          },
+          x: {
+            title: { display: true, text: 'SP %' }
+          }
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>
